@@ -4,7 +4,7 @@ const
 	express = require('express'),
 	app 	= express(),
 	http 	= require('http'),
-	port 	= 6000;
+	port 	= 8000;
 
 
 
@@ -13,6 +13,10 @@ app.get("/test", function(request, response) {
 	check(request, response, 0); 
 });
 
+app.all("*", function(request, response) {
+	console.log("Request come", new Date());
+	response.status(200).send("Response from default route");
+})
 
 
 function check(request, response, count) {
@@ -26,7 +30,7 @@ function check(request, response, count) {
 	
 	else {
 		console.log('response sent to client');
-		response.status(200).send("welocme to test application");
+		response.status(200).send("welcocme to test application");
 	}
 }
 
