@@ -13,9 +13,12 @@
     "express": "^4.16.4",
     "http": "0.0.0",
     "http-proxy": "^1.17.0",
+    "kafka-node": "^4.0.0",
+    "lodash": "^4.17.11",
     "optimist": "^0.6.1",
     "os": "^0.1.1",
     "ptmproc": "git+ssh://git@bitbucket.org/paytmteam/proc.git#watchOptimization",
+    "q": "^1.5.1",
     "recluster": "^0.4.5"
   }
 }
