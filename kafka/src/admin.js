@@ -7,7 +7,6 @@ import Q from 'q';
 class Admin {
 	constructor(configParams) {
 		this.configParams = configParams ? configParams : {};
-		
 		this.options = {};
 		this.options.kafkaHost = _.get(this.configParams, "kafkaHost", _.get(config, "kafka_config.kafkaHost", "")); 
 		this.options.connectTimeout = _.get(this.configParams, "connectTimeout", _.get(config, "kafka_config.connectTimeout", "")); 
@@ -27,16 +26,18 @@ class Admin {
 
 	connect(cb) {
 		let defer = Q.defer();
-		this.client = this.client ? this.client : new kafka.kafkaClient(this.options);
+		console.log("Kafka Client init::", this.options);
+		this.client = this.client ? this.client : new kafka.KafkaClient(this.options);
 		var message = "";
 		this.client.on("ready", () => {
 			message = "Kafka client is connected";
-			_replyResponse(cb, defer, null, message);
+			this._replyResponse(cb, defer, null, message);
 		});
 
-		this.client.on("error", () => {
+		this.client.on("error", (err) => {
+			console.error("Error while connecting to kafka client::",err);
 			message = "Fuck you, Please check condomn before fucking";
-			_replyResponse(cb, defer, message, null);
+			this._replyResponse(cb, defer, message, null);
 		});
 		return defer.promise;
 	}
@@ -44,7 +45,7 @@ class Admin {
 	createTopics(topics, cb) {
 		let defer = Q.defer();
 		if(!topics) {
-			self._replyResponse(cb, defer, "Topics Field can't be empty", null);
+			this._replyResponse(cb, defer, "Topics Field can't be empty", null);
 		}
 		else {
 			if(!Array.isArray(topics)) {
@@ -52,18 +53,19 @@ class Admin {
 			}
 			if(this.client) {
 				this.client.createTopics(topics, (err, result)=> {
-					this._replyResponse(cb, defer, null, "topics created successfully")
+					this.this._replyResponse(cb, defer, null, "topics created successfully")
 				});
 			}
 			else {
-				this._replyResponse(cb, defer, "Client is not created", null);
+				this.this._replyResponse(cb, defer, "Client is not created", null);
 			}
 		}
+		return defer.promise;
 }
 
 
 	_replyResponse(cb, deferred, error, data) {
-		error ? deferred.resolve(data) : deferred.reject(error);
+		error ? deferred.reject(error) : deferred.resolve(data)
 		if(cb) {
 			error ? cb(error) : cb(null, data);
 		}

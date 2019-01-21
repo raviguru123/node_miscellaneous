@@ -1,10 +1,5 @@
-import admin from './admin';
-import producer from './producer';
-import consumer from './consumer';
+var 
+		kafka = require("./dest/index.js");
 
 
-module.exports = {
-	Admin : admin,
-	Producer : producer,
-	Consumer : consumer
-}
+module.exports = kafka;

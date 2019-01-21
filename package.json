@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel /home/raviguru/new_gp/node_miscellaneous/kafka/src --presets babel-preset-es2015 --out-dir /home/raviguru/new_gp/node_miscellaneous/kafka/dest"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cluster": "^0.7.7",
+    "commander": "^2.19.0",
     "express": "^4.16.4",
     "http": "0.0.0",
     "http-proxy": "^1.17.0",
@@ -20,5 +22,10 @@
     "ptmproc": "git+ssh://git@bitbucket.org/paytmteam/proc.git#watchOptimization",
     "q": "^1.5.1",
     "recluster": "^0.4.5"
+  },
+  "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-preset-env": "1.7.0",
+    "babel-preset-es2015": "^6.24.1"
   }
 }
